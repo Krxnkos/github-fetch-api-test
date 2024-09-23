@@ -3,6 +3,33 @@ body {
     margin: 20px;
 }
 
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#display-name {
+    font-size: 1.2em;
+    color: #333;
+}
+
+#followers-count {
+    font-size: 1em;
+    color: #666;
+    margin-top: 5px;
+}
+
+#profile {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#avatar {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+}
+
 #repo-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -31,16 +58,20 @@ body {
 }
 
 .repo-item a {
+    display: inline-block;
+    padding: 5px 20px;
+    border: 1px solid #0366d6;
+    background-color: rgba(3, 102, 214, 0.1);
+    transition: background-color 0.3s ease, color 0.3s ease;
     color: #0366d6;
     text-decoration: none;
 }
 
-.repo-item iframe {
-    width: 100%;
-    height: 200px;
-    border: none;
-    margin-top: 10px;
+.repo-item a:hover {
+    background-color: #0366d6;
+    color: #fff;
 }
+
 
 @media screen and (min-width: 1025px) {
 

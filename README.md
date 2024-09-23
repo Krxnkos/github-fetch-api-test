@@ -15,17 +15,19 @@ Repo Location for the Commenting, Async and API task set in Jimy's Lesson
  - https://github.com/Krxnkos
 - Show the following from the Repositories
  - Name [DONE]
- - Description
- - No. Of Stars
- - Primary Language (Programming)
+ - Description [DONE]
+ - No. Of Stars [DONE]
+ - Primary Language (Programming) [DONE]
 
-- Use JSDoc Comments
+- Use JSDoc Comments [DONE]
 - Document the process (See ./ShowcaseDocumentation.docx)
 
 **Additional Tasks**
 - Display Avatar [DONE]
-- Display Name (First Name) 
-- Display Follower/Following Count
+- Display Name (First Name) [DONE]
+- Display Follower/Following Count [DONE]
 
 **Bugs/Issues**
-- Fix README/Bio displaying in webpage
+- Fix README/Bio displaying in webpage [CLOSED]
+ - Issue established on GitHub
+ - Issue Closed since  GitHub does not allow iFrame embeds on 3rd party websites

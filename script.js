@@ -1,19 +1,38 @@
+/**
+ * Class representing a GitHub user profile.
+ */
 class UserProfile {
-    constructor(userUrl, reposUrl, avatarElement, repoListElement, readmeElement) {
+    /**
+     * Create a user profile.
+     * @param {string} userUrl - The URL to fetch user data.
+     * @param {string} reposUrl - The URL to fetch repositories data.
+     * @param {HTMLElement} avatarElement - The element to display the user's avatar.
+     * @param {HTMLElement} repoListElement - The element to display the list of repositories.
+     * @param {HTMLElement} displayNameElement - The element to display the user's display name.
+     * @param {HTMLElement} followersCountElement - The element to display the user's followers count.
+     */
+    constructor(userUrl, reposUrl, avatarElement, repoListElement, displayNameElement, followersCountElement) {
         this.userUrl = userUrl;
         this.reposUrl = reposUrl;
-        this.avatar = avatarElement;
-        this.repoList = repoListElement;
-        this.readme = readmeElement;
-
+        this.avatarElement = avatarElement;
+        this.repoListElement = repoListElement;
+        this.displayNameElement = displayNameElement;
+        this.followersCountElement = followersCountElement;
+        
         this.init();
     }
 
+    /**
+     * Initialize the user profile by fetching and displaying user and repository data.
+     */
     async init() {
         try {
+            // Fetch user information
             const userResponse = await fetch(this.userUrl);
             const userData = await userResponse.json();
-            this.avatar.src = userData.avatar_url;
+            this.avatarElement.src = userData.avatar_url;
+            this.displayNameElement.textContent = userData.name || 'GitHub User';
+            this.followersCountElement.textContent = `Followers: ${userData.followers}`;
 
             // Fetch repository information
             const reposResponse = await fetch(this.reposUrl);
@@ -23,19 +42,15 @@ class UserProfile {
                 repoItem.classList.add('repo-item');
                 repoItem.innerHTML = `
                     <h2>${repo.name}</h2>
-                    <p>${repo.description}</p>
+                    <p>${repo.description || 'No description available'}</p>
+                    <p>⭐ Stars: ${repo.stargazers_count}</p>
+                    <p>🖥️ Language: ${repo.language || 'Not specified'}</p>
+                    <br>
                     <a href="${repo.html_url}" target="_blank">View Repository</a>
-                    <iframe src="${repo.html_url}" width="100%" height="200"></iframe>
                 `;
-                this.repoList.appendChild(repoItem);
+                this.repoListElement.appendChild(repoItem);
             });
-
-            // Fetch README file
-            const readmeResponse = await fetch(`https://api.github.com/repos/krxnkos/krxnkos/readme`, {
-                headers: { 'Accept': 'application/vnd.github.v3.raw' }
-            });
-            const readmeText = await readmeResponse.text();
-            this.readme.innerHTML = marked(readmeText); // Convert Markdown to HTML using marked.js
+        
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -47,17 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const reposUrl = 'https://api.github.com/users/krxnkos/repos';
     const avatarElement = document.getElementById('avatar');
     const repoListElement = document.getElementById('repo-list');
-    const readmeElement = document.getElementById('readme');
+    const displayNameElement = document.getElementById('display-name');
+    const followersCountElement = document.getElementById('followers-count');
 
-    new UserProfile(userUrl, reposUrl, avatarElement, repoListElement, readmeElement);
-});
-
-document.addEventListener('scroll', () => {
-    console.log(scrollY);
-
-    if (scrollY > 60) {
-        document.getElementById('navigation').classList.add('active');
-    } else {
-        document.getElementById('navigation').classList.remove('active');
-    }
+    new UserProfile(userUrl, reposUrl, avatarElement, repoListElement, displayNameElement, followersCountElement);
 });
